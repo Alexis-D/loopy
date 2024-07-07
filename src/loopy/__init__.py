@@ -56,7 +56,7 @@ class EventLoop:
                     break
 
             # we don't have ready tasks, let's see if any fd is ready to be read from
-            for key, _ in self._sel.select(0.1):
+            for key, _ in self._sel.select(timeout):
                 # schedule the callback
                 self.call_soon(key.data)
 

@@ -3,8 +3,8 @@
 A toy event loop to get a better grasp of how [`asyncio`](https://docs.python.org/3/library/asyncio.html) works behind
 the scenes. It relies on [`selectors`](https://docs.python.org/3/library/selectors.html) for the socket I/O.
 
-In one shell, run the toy program with: `rye run loopy`, in other shells, send data to the server using `socat
-- TCP:localhost:1234`.
+In one shell, run the toy program with: `rye run loopy`, in other shells, send data to the server using
+`socat - TCP:localhost:1234`.
 
 Output will be something like this:
 

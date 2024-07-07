@@ -40,6 +40,8 @@ class EventLoop:
 
     def run_forever(self):
         while True:
+            timeout = 0.1
+
             while self._tasks:
                 # as long as we have task, look at the head task
                 task = heapq.heappop(self._tasks)
@@ -50,6 +52,7 @@ class EventLoop:
                 else:
                     # otherwise queue it back, we can't run any more tasks immediately
                     heapq.heappush(self._tasks, task)
+                    timeout = min(timeout, task.priority - time.monotonic())
                     break
 
             # we don't have ready tasks, let's see if any fd is ready to be read from

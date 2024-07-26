@@ -45,14 +45,13 @@ class EventLoop:
 
             while self._tasks:
                 # as long as we have task, look at the head task
-                task = heapq.heappop(self._tasks)
+                task = self._tasks[0]
 
                 if task.priority == 0 or task.priority < time.monotonic():
-                    # if it can be executed immediately, execute it
+                    # only pop the task when we're ready to execute it
+                    heapq.heappop(self._tasks)
                     task.callback()
                 else:
-                    # otherwise queue it back, we can't run any more tasks immediately
-                    heapq.heappush(self._tasks, task)
                     timeout = min(timeout, task.priority - time.monotonic())
                     break
 

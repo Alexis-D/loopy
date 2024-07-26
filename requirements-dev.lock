@@ -9,3 +9,5 @@
 #   generate-hashes: false
 
 -e file:.
+structlog==24.4.0
+    # via loopy

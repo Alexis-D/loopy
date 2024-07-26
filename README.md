@@ -9,39 +9,36 @@ In one shell, run the toy program with: `rye run loopy`, in other shells, send d
 Output will be something like this:
 
 ```
-2024-07-07 14:54:55,836 INFO __init__ MainThread Count: 0
-2024-07-07 14:54:56,847 INFO __init__ MainThread Count: 1
-2024-07-07 14:54:57,856 INFO __init__ MainThread Count: 2
-2024-07-07 14:54:58,866 INFO __init__ MainThread Count: 3
-2024-07-07 14:54:58,894 INFO __init__ MainThread Accept from ('127.0.0.1', 62857)
-2024-07-07 14:54:59,903 INFO __init__ MainThread Count: 4
-2024-07-07 14:55:00,256 INFO __init__ MainThread Accept from ('127.0.0.1', 62859)
-2024-07-07 14:55:00,963 INFO __init__ MainThread Count: 5
-2024-07-07 14:55:01,973 INFO __init__ MainThread Count: 6
-2024-07-07 14:55:02,982 INFO __init__ MainThread Count: 7
-2024-07-07 14:55:03,992 INFO __init__ MainThread Count: 8
-2024-07-07 14:55:05,000 INFO __init__ MainThread Count: 9
-2024-07-07 14:55:05,865 INFO __init__ MainThread Recvd (from ('127.0.0.1', 62857)): b'hello from one connection!\n'
-2024-07-07 14:55:06,067 INFO __init__ MainThread Count: 10
-2024-07-07 14:55:07,076 INFO __init__ MainThread Count: 11
-2024-07-07 14:55:08,084 INFO __init__ MainThread Count: 12
-2024-07-07 14:55:09,091 INFO __init__ MainThread Count: 13
-2024-07-07 14:55:10,101 INFO __init__ MainThread Count: 14
-2024-07-07 14:55:11,112 INFO __init__ MainThread Count: 15
-2024-07-07 14:55:12,120 INFO __init__ MainThread Count: 16
-2024-07-07 14:55:13,128 INFO __init__ MainThread Count: 17
-2024-07-07 14:55:14,137 INFO __init__ MainThread Count: 18
-2024-07-07 14:55:15,041 INFO __init__ MainThread Recvd (from ('127.0.0.1', 62859)): b'hello from another one!\n'
-2024-07-07 14:55:15,143 INFO __init__ MainThread Count: 19
-2024-07-07 14:55:16,153 INFO __init__ MainThread Count: 20
-2024-07-07 14:55:17,163 INFO __init__ MainThread Count: 21
-2024-07-07 14:55:18,172 INFO __init__ MainThread Count: 22
-2024-07-07 14:55:18,207 INFO __init__ MainThread Recvd (from ('127.0.0.1', 62857)): b'bye bye!\n'
-2024-07-07 14:55:19,219 INFO __init__ MainThread Count: 23
-2024-07-07 14:55:20,228 INFO __init__ MainThread Count: 24
-2024-07-07 14:55:20,344 INFO __init__ MainThread Recvd (from ('127.0.0.1', 62859)): b'bye bye\n'
-2024-07-07 14:55:21,311 INFO __init__ MainThread Count: 25
-2024-07-07 14:55:22,408 INFO __init__ MainThread Count: 26
+2024-07-26 12:11:58 [info     ] Count                          i=0
+2024-07-26 12:11:59 [info     ] Count                          i=1
+2024-07-26 12:12:00 [info     ] Count                          i=2
+2024-07-26 12:12:01 [info     ] Count                          i=3
+2024-07-26 12:12:02 [info     ] Count                          i=4
+2024-07-26 12:12:03 [info     ] Count                          i=5
+2024-07-26 12:12:04 [info     ] Count                          i=6
+2024-07-26 12:12:05 [info     ] Count                          i=7
+2024-07-26 12:12:06 [info     ] Count                          i=8
+2024-07-26 12:12:07 [info     ] Count                          i=9
+2024-07-26 12:12:08 [info     ] Count                          i=10
+2024-07-26 12:12:09 [info     ] Count                          i=11
+2024-07-26 12:12:10 [info     ] Count                          i=12
+2024-07-26 12:12:11 [info     ] Count                          i=13
+2024-07-26 12:12:12 [info     ] Count                          i=14
+2024-07-26 12:12:12 [info     ] Accept                         from_=('127.0.0.1', 56776)
+2024-07-26 12:12:13 [info     ] Count                          i=15
+2024-07-26 12:12:14 [info     ] Count                          i=16
+2024-07-26 12:12:14 [info     ] Recvd                          data=b'hello\n' from_=('127.0.0.1', 56776)
+2024-07-26 12:12:15 [info     ] Count                          i=17
+2024-07-26 12:12:15 [info     ] Recvd                          data=b'world\n' from_=('127.0.0.1', 56776)
+2024-07-26 12:12:16 [info     ] Count                          i=18
+2024-07-26 12:12:17 [info     ] Count                          i=19
+2024-07-26 12:12:17 [info     ] Accept                         from_=('127.0.0.1', 56778)
+2024-07-26 12:12:18 [info     ] Count                          i=20
+2024-07-26 12:12:19 [info     ] Count                          i=21
+2024-07-26 12:12:20 [info     ] Count                          i=22
+2024-07-26 12:12:20 [info     ] Recvd                          data=b'bye bye\n' from_=('127.0.0.1', 56778)
+2024-07-26 12:12:21 [info     ] Count                          i=23
+2024-07-26 12:12:22 [info     ] Count                          i=24
 ```
 
 As can be seen this all runs on a single thread, and happily interlaces work, whether that printing counts on

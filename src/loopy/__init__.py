@@ -1,17 +1,20 @@
-import functools
 import heapq
-import logging
 import selectors
 import socket
 import time
 from dataclasses import dataclass, field
 from typing import Any
 
+import structlog
+
 
 @dataclass(order=True)
 class _Task:
     priority: int
     callback: Any = field(compare=False)
+
+
+log = structlog.get_logger()
 
 
 class EventLoop:
@@ -30,9 +33,7 @@ class EventLoop:
 
     def call_when_ready_to_read(self, fileobj, fn):
         """When fileobj becomes readable, fn will be called -with fileobj- as an argument"""
-        self._sel.register(
-            fileobj, selectors.EVENT_READ, data=functools.partial(fn, fileobj)
-        )
+        self._sel.register(fileobj, selectors.EVENT_READ, data=fn)
 
     def forget(self, fileobj):
         """Used to stop monitoring fileobj"""
@@ -62,15 +63,15 @@ class EventLoop:
 
 
 def count(loop, i=0):
-    logging.info(f"Count: {i}")
-    loop.call_later(functools.partial(count, loop, i + 1), 1)
+    log.info("Count", i=i)
+    loop.call_later(lambda: count(loop, i + 1), 1)
 
 
 def read(loop, addr, conn):
     data = conn.recv(128)
 
     if data:
-        logging.info(f"Recvd (from {addr}): {data!r}")
+        log.info("Recvd", from_=addr, data=repr(data))
     else:
         loop.forget(conn)
         conn.close()
@@ -78,10 +79,10 @@ def read(loop, addr, conn):
 
 def accept(loop, sock):
     conn, addr = sock.accept()
-    logging.info(f"Accept from {addr}")
+    log.info("Accept", from_=addr)
     conn.setblocking(False)
 
-    loop.call_when_ready_to_read(conn, functools.partial(read, loop, addr))
+    loop.call_when_ready_to_read(conn, lambda: read(loop, addr, conn))
 
 
 def start_server(loop):
@@ -90,16 +91,11 @@ def start_server(loop):
     sock.listen()
     sock.setblocking(False)
 
-    loop.call_when_ready_to_read(sock, functools.partial(accept, loop))
+    loop.call_when_ready_to_read(sock, lambda: accept(loop, sock))
 
 
 def main():
-    logging.basicConfig(
-        format="%(asctime)s %(levelname)s %(module)s %(threadName)s %(message)s",
-        level=logging.INFO,
-    )
-
     loop = EventLoop()
-    loop.call_soon(functools.partial(count, loop))
-    loop.call_soon(functools.partial(start_server, loop))
+    loop.call_soon(lambda: count(loop))
+    loop.call_soon(lambda: start_server(loop))
     loop.run_forever()
